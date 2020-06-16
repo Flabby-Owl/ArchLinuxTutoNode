@@ -17,7 +17,6 @@
 
 - [Express](https://www.npmjs.com/package/express)
 - [Pug](https://www.npmjs.com/package/pug)
-- [Node.js](https://nodejs.org/en/)
 
 **Autres**
 
