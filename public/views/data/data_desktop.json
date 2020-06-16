@@ -1,0 +1,13 @@
+{
+    "d_gnome_install": "sudo pacman -S gnome gnome-extra telepathy shotwell rhythmbox",
+    "d_gnome_start_gdm": "sudo systemctl start gdm",
+    "d_gnome_enable_gdm": "sudo systemctl enable gdm",
+    "d_kde_install": "sudo pacman -S plasma kde-applications digikam packagekit-qt5",
+    "d_kde_start_sddm": "sudo systemctl start sddm",
+    "d_kde_enable_sddm": "sudo systemctl enable sddm",
+    "d_xfce_install": "sudo pacman -S xfce4 xfce4-goodies gvfs gvfs-{afc,goa,google,gphoto2,mtp,nfs,smb} lightdm-gtk-{greeter,greeter-settings} file-roller galculator evince ffmpegthumbnailer xscreensaver pavucontrol pulseaudio-alsa rhythmbox",
+    "d_mate_install": "sudo pacman -S mate mate-extra gnome-icon-theme accountsservice gvfs gvfs-{afc,goa,google,gphoto2,mtp,nfs,smb} lightdm-gtk-{greeter,greeter-settings} file-roller ffmpegthumbnailer pulseaudio pulseaudio-alsa libcanberra-{pulse,gstreamer} rhythmbox",
+    "d_deepin_install": "sudo pacman -S deepin deepin-extra gvfs gvfs-{afc,goa,google,gphoto2,mtp,nfs,smb} lightdm-gtk-{greeter,greeter-settings}",
+    "d_cinnamon_install": "sudo pacman -S cinnamon gnome-extra gvfs gvfs-{afc,goa,google,gphoto2,mtp,nfs,smb} lightdm-gtk-{greeter,greeter-settings}",
+    "d_cinnamon_addons": "sudo pacman -S gnome-terminal rhythmbox gedit galculator"
+}

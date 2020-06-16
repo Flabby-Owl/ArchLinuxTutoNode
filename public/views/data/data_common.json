@@ -1,0 +1,7 @@
+{
+    "c_keymap": "loadkeys fr",
+    "c_exit": "exit",
+    "c_reboot": "reboot",
+    "c_lightdm_start": "sudo systemctl start lightdm",
+    "c_lightdm_enable": "sudo systemctl enable lightdm"
+}

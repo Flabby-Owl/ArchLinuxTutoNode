@@ -1,0 +1,11 @@
+{
+    "name": "archlinux-install-tutorial",
+    "version": "2.0.0",
+    "description": "ArchLinux Installation Tutorial in French",
+    "author": "Flabby-Owl ",
+    "license": "ISC",
+    "dependencies": {
+        "express": "4.*",
+        "pug": "3.*"
+    }
+}

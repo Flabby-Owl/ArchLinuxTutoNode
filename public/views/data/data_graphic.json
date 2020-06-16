@@ -1,0 +1,16 @@
+{
+"g_pacman_syy":"pacman -Syy",
+"g_pacman_s_ntpgit":"pacman -S ntp git",
+"g_enable_ntp":"systemctl enable ntpd",
+"g_alsamixer":"alsamixer",
+"g_alsactl_store":"alsactl store",
+"g_pacman_s_gstreamer":"pacman -S gst-plugins-{base,good,bad,ugly} gst-libav",
+"g_pacman_s_xorg":"pacman -S xorg-{server,xinit,apps} xf86-input-libinput xdg-user-dirs",
+"g_pacman_s_fonts":"pacman -S ttf-{bitstream-vera,liberation,dejavu} freetype2 gnu-free-fonts",
+"g_pacman_s_baseapps":"pacman -S gimp gimp-help-fr libreoffice-fresh-fr firefox-i18n-fr thunderbird-i18n-fr vlc",
+"g_yay_dl":"git clone https://aur.archlinux.org/yay",
+"g_yay_dir":"cd yay",
+"g_yay_install":"makepkg -sri",
+"g_yay_exemple":"yay -S nom-du-paquet-1 nom-du-paquet-2 nom-du-paquet-3",
+"g_dm_key_fr":"sudo localectl set-x11-keymap fr"
+} 

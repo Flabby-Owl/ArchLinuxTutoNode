@@ -1,0 +1,21 @@
+{
+    "i_archbios":"img/archbios.png",
+    "i_cfdisk":"img/cfdisk1.png", 
+    "i_cfdisk2":"img/cfdisk2.png", 
+    "i_archuefi":"img/archuefi.png", 
+    "i_cgdisk":"img/cgdisk.png", 
+    "i_mirrors":"img/mirrors.png", 
+    "i_mkinicpio":"img/mkinitcpio.png", 
+    "i_sudoers":"img/sudoers.png", 
+    "i_alsamixer":"img/alsamixer.png", 
+    "i_gdm":"img/gdm.png", 
+    "i_gnome":"img/gnome.png",
+    "i_sddm":"img/sddm.png", 
+    "i_kde":"img/kde.png",
+    "i_lightdm":"img/lightdm.png", 
+    "i_xfce":"img/xfce.png", 
+    "i_mate":"img/mate.png",
+    "i_deepin":"img/deepin.png",
+    "i_cinnamon":"img/cinnamon.png",
+    "i_placeholder":"img/placeholder.png"  
+}

@@ -1,0 +1,80 @@
+extends layout.pug
+block body
+
+    div.row
+        div.col.m3.hide-on-med-and-down
+            ul.section.table-of-contents#summary
+                img.responsive-img(src="img/arch-logo.svg", alt="Logo de Archlinux")
+                li.flow-text: a(href='#introduction') 
+                    |1. Dessiner les plans
+                li.flow-text: a(href='#base') 
+                    |2. Couler les fondations
+                li.flow-text: a(href='#graphique') 
+                    |3. Monter les murs
+                li.flow-text: a(href='#desktop') 
+                    |4. Installer les meubles
+
+        div.col.m9.s12
+            div#introduction.section.scrollspy      
+                h4.indigo-text.darken-4
+                    |Partie 1. Dessiner les plans - Introduction
+
+                p.flow-text
+                    |Ce petit guide détaillera le processus d'installation d'ArchLinux ainsi que les principaux Environnements de Bureau (Desktop Environnement). L'installation terminée proposera un environnement suffisamment étoffé pour être utilisable.
+
+                p.flow-text
+                    |Pour des raisons évidentes, je n'aborderais pas l'ajout de matériel tel qu'imprimantes, scanners ou webcams. Je vous renvoie aux wikis  
+                    a(href='https://wiki.archlinux.org/') anglophones 
+                    |et 
+                    a(href='http://wiki.archlinux.fr/Accueil') francophones 
+                    |pour ce genre de manipulations.
+
+                p.flow-text
+                    |Ce tutoriel est volontairement simplifié. Il va vous permettre de voir comment installer une ArchLinux en solo. Ensuite, s’il y a des spécificités liées à votre matériel, c’est au cas par cas qu’il faut regarder et compulser frénétiquement les wikis ci-dessus. Si vous voulez installer une Archlinux en parallèle d’une installation de MS-Windows, c’est en dehors du cadre de ce tutoriel.
+
+                p.flow-text
+                    |Ce guide est basé sur la dernière version du guide "Installer ArchLinux et Gnome version 68" par 
+                    a(href='http://frederic.bezies.free.fr/blog') Frédéric Béziès 
+                    |avec son aimable autorisation, réadapté et remis au gout du jour. Certaines tournures de phrases, parfois identiques au mot près, ne sont donc pas le fruit du hasard. Merci à lui
+
+            div#base.section.scrollspy      
+                h4.indigo-text.darken-4
+                    |Partie 2. Couler les fondations - Configuration/Installation de la base.
+                p.flow-text
+                    |Installer une Archlinux, c’est comme construire une maison. On commence par les fondations, et on rajoute les murs et le reste par la suite.
+
+                p.flow-text
+                    |La procedure etant differente selon si votre systeme fonctionne en mode BIOS ou en mode UEFI, la suite de ce guide dependra de l'option que vous selectionnerez par la suite.
+                
+                div.row
+                    div.col.s12
+                        ul.tabs
+                            li.tab.col.s6#bTab: a(href='#bios') BIOS
+                            li.tab.col.s6#uTab: a(href='#uefi') UEFI
+
+                    div.col.s12#bios
+                        h5.red-text.darken-5 Partie 2.A: Configuration des partitions en mode BIOS
+                        p.flow-text
+                            |La selection des lignes de commande a taper a étée volontairement désactivée afin que vous tapiez vous meme ces commandes et que vous les adaptiez en conséquence, elles ne sont ecrites de cette maniere qu'a titre 
+                            b INDICATIF
+
+                        p.flow-text
+                            |Les captures d'ecran mentionnent une nomenclature differente au niveau des disques, cela vient du fait que celles-ci ont été faites sur QEMU (sda devenant vda), vous devrez donc en prendre compte et adapter a votre situation
+
+
+
+
+
+
+
+
+
+            div#graphique.section.scrollspy      
+                h4.indigo-text.darken-4
+                    |Partie 3. Monter les murs - Configuration/Installation de l'environnement graphique.
+
+            div#desktop.section.scrollspy      
+                h4.indigo-text.darken-4
+                    |Partie 4. Installer les meubles - Installation du "Desktop Environnement".                 
+
+
