@@ -62,7 +62,26 @@ block body
                             |Les captures d'ecran mentionnent une nomenclature differente au niveau des disques, cela vient du fait que celles-ci ont été faites sur QEMU (sda devenant vda), vous devrez donc en prendre compte et adapter a votre situation
 
 
+                            div.container
+                                div.row
+                                    div.col.s12.m8
+                                        div.card-panel.grey.lighten-2.black-text.center-align
+                                            img.materialboxed.responsive-img(src="img/archbios.png", alt="Image de démarage en mode BIOS de ArchLinux")
+                                            p Ecran de démarrage en mode BIOS
 
+                        p.flow-text
+                            |Quand vous aurez demarré en mode Live et que ArchLinux vous aura laissé la main, la première chose à faire, c’est d’avoir le clavier français :
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # loadkeys fr
+                                            span.blinking _
+
+                        p.flow-text
+                            |Un fois ceci fait nous allons pouvoir lancer cfdisk afin de gerer notre partitionnement:                                    
 
 
 
@@ -75,6 +94,4 @@ block body
 
             div#desktop.section.scrollspy      
                 h4.indigo-text.darken-4
-                    |Partie 4. Installer les meubles - Installation du "Desktop Environnement".                 
-
-
+                    |Partie 4. Installer les meubles - Installation du "Desktop Environnement".
