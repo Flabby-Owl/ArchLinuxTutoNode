@@ -52,6 +52,8 @@ block body
                             li.tab.col.s6#bTab: a(href='#bios') BIOS
                             li.tab.col.s6#uTab: a(href='#uefi') UEFI
 
+                    //- Section dediée au mode BIOS                            
+
                     div.col.s12#bios
                         h5.red-text.darken-5 Partie 2.A: Configuration des partitions en mode BIOS
                         p.flow-text
@@ -77,16 +79,1042 @@ block body
                                     div.card-panel.black.lighten-2.grey-text.termfont
                                         b.no-select
                                             span.red-text root@archiso ~ 
-                                            span.white-text # loadkeys fr
+                                            span.white-text # 
+                                            |loadkeys fr
                                             span.blinking _
+
+                        p.flow-text
+                            |Si vous utilisez un clavier 
+                            b Canadien
+                            |, 
+                            b Suisse 
+                            |ou 
+                            b Belge
+                            |, remplacez 
+                            b fr 
+                            |par 
+                            b ca
+                            |, 
+                            b ch 
+                            |ou 
+                            b be                    
 
                         p.flow-text
                             |Un fois ceci fait nous allons pouvoir lancer cfdisk afin de gerer notre partitionnement:                                    
 
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |cfdisk
+                                            span.blinking _
+
+                        p.flow-text
+                            |Choisissez l’option « dos » pour le « label type » à appliquer.                        
+
+                            div.container
+                                div.row
+                                    div.col.s12.m8
+                                        div.card-panel.grey.lighten-2.black-text.center-align
+                                            img.materialboxed.responsive-img(src="img/cfdisk1.png", alt="Image de l'ecran du 1er démarrage de CFDISK")
+                                            p Premier démarrage de CFDISK
+
+                        p.flow-text
+                            |Voici un exemple de partitionnement type a adapter selon vos besoins et préférences:
+
+                        table.striped
+                            thead
+                                tr
+                                    th Référence
+                                    th Point de montage
+                                    th Taille
+                                    th Système de fichiers
+                            tbody
+                                tr
+                                    td dev/sda1
+                                    td /boot
+                                    td 256mo
+                                    td ext4
+                                tr
+                                    td /dev/sda2
+                                    td Aucun
+                                    td Taille de la mémoire vive ou plus – à partir de 8 Go de mémoire vive, 1 Go est conseillé
+                                    td swap              
+                                tr
+                                    td /dev/sda3
+                                    td /
+                                    td 20go minimum
+                                    td ext4
+                                tr
+                                    td /dev/sda4
+                                    td /home
+                                    td Ce qui reste
+                                    td ext4
+
+                        p.flow-text
+                            |Il ne faut pas oublier de définir la partition attribuée à /boot comme démarrable (bootable):
+
+                            div.container
+                                div.row
+                                    div.col.s12.m8
+                                        div.card-panel.grey.lighten-2.black-text.center-align
+                                            img.materialboxed.responsive-img(src="img/cfdisk2.png", alt="Image de l'ecran principale de CFDISK")
+                                            p CFDISK en action
+
+                        p.flow-text
+                            |N'oubliez pas de valider vos modifications effectuées dans cfdisk en selectionnant "Write" avant de quitter l'outil.
+
+                        p.flow-text
+                            |Et nous passons au formatage des partitions...
+
+                        p.flow-text
+                            |Partition 
+                            b Boot
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkfs.ext4 /dev/sda1
+                                            span.blinking _
+
+                        p.flow-text
+                            |Partition 
+                            b Root 
+                            |:
+                            
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkfs.ext4 /dev/sda3
+                                            span.blinking _
+
+                        p.flow-text
+                            |Partition 
+                            b Home 
+                            |:
+                            
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkfs.ext4 /dev/sda4
+                                            span.blinking _
+
+                        p.flow-text
+                            |Puis on crée le 
+                            b swap
+                            |...
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkswap /dev/sda2
+                                            span.blinking _
+
+                        p.flow-text
+                            |...Et on l'active!
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |swapon /dev/sda2
+                                            span.blinking _
+
+                        p.flow-text
+                            |Pour finir, nous allons creer nos points de montage et y associer nos partitions:
+                            
+
+                        p.flow-text
+                            |Montez votre partition 
+                            span.indigo-text.darken-4 /dev/sda3 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mount /dev/sda3 /mnt
+                                            span.blinking _                                                
+
+                        p.flow-text
+                            |Créez les dossiers 
+                            b boot 
+                            |et 
+                            b home 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkdir /mnt/{boot,home}
+                                            span.blinking _
+
+                        p.flow-text
+                            |Montez votre partition 
+                            span.indigo-text.darken-4 /dev/sda1 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt/boot
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mount /dev/sda1 /mnt/boot
+                                            span.blinking _
+
+                        p.flow-text
+                            |Montez votre partition 
+                            span.indigo-text.darken-4 /dev/sda4 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt/home
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mount /dev/sda4 /mnt/home
+                                            span.blinking _
+
+                        p.flow-text
+                            |Nous pouvons desormais passer a l'installation de la base...
+
+                        //-Section dediée a l'installation en mode UEFI
+
+                    div.col.s12#uefi
+                        h5.red-text.darken-5 Partie 2.B: Configuration des partitions en mode UEFI
+                        p.flow-text
+                            |La selection des lignes de commande a taper a étée volontairement désactivée afin que vous tapiez vous meme ces commandes et que vous les adaptiez en conséquence, elles ne sont ecrites de cette maniere qu'a titre 
+                            b INDICATIF
+
+                        p.flow-text
+                            |Les captures d'ecran mentionnent une nomenclature differente au niveau des disques, cela vient du fait que celles-ci ont été faites sur QEMU (sda devenant vda), vous devrez donc en prendre compte et adapter a votre situation
 
 
+                            div.container
+                                div.row
+                                    div.col.s12.m8
+                                        div.card-panel.grey.lighten-2.black-text.center-align
+                                            img.materialboxed.responsive-img(src="img/archuefi.png", alt="Image de démarage en mode UEFI de ArchLinux")
+                                            p Ecran de démarrage en mode UEFI
 
+                        p.flow-text
+                            |Quand vous aurez demarré en mode Live et que ArchLinux vous aura laissé la main, la première chose à faire, c’est d’avoir le clavier français :
 
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |loadkeys fr
+                                            span.blinking _
+
+                        p.flow-text
+                            |Si vous utilisez un clavier 
+                            b Canadien
+                            |, 
+                            b Suisse 
+                            |ou 
+                            b Belge
+                            |, remplacez 
+                            b fr 
+                            |par 
+                            b ca
+                            |, 
+                            b ch 
+                            |ou 
+                            b be 
+
+                        p.flow-text
+                            |Un fois ceci fait nous allons pouvoir lancer cgdisk afin de gerer notre partitionnement:                                    
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |cgdisk /dev/sda
+                                            span.blinking _
+
+                        p.flow-text
+                            |Voici un exemple de partitionnement type a adapter selon vos besoins et préférences:
+
+                        table.striped
+                            thead
+                                tr
+                                    th Référence
+                                    th Point de montage
+                                    th Taille
+                                    th Système de fichiers
+                            tbody
+                                tr
+                                    td dev/sda1
+                                    td /
+                                    td 20go minimum
+                                    td ext4
+                                tr
+                                    td /dev/sda2
+                                    td /boot/efi
+                                    td 256mo
+                                    td FAT32              
+                                tr
+                                    td /dev/sda3
+                                    td Aucun
+                                    td Taille de la mémoire vive ou plus – à partir de 8 Go de mémoire vive, 1 Go est conseillé
+                                    td swap
+                                tr
+                                    td /dev/sda4
+                                    td /home
+                                    td Ce qui reste
+                                    td ext4
+
+                        p.flow-text
+                            |La partition boot devra etre de type EFI System (EF00) et la swap de type swap (8200)
+
+                            div.container
+                                div.row
+                                    div.col.s12.m8
+                                        div.card-panel.grey.lighten-2.black-text.center-align
+                                            img.materialboxed.responsive-img(src="img/cgdisk.png", alt="Image de l'ecran principale de CGDISK")
+                                            p CGDISK en action
+
+                        p.flow-text
+                            |N'oubliez pas de valider vos modifications effectuées dans cgdisk en selectionnant "Write" avant de quitter l'outil.
+
+                        p.flow-text
+                            |Et nous passons au formatage des partitions...
+
+                        p.flow-text
+                            |Partition 
+                            b Root
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkfs.ext4 /dev/sda1
+                                            span.blinking _
+
+                        p.flow-text
+                            |Partition 
+                            b Boot 
+                            |:
+                            
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkfs.fat -F32 /dev/sda2
+                                            span.blinking _
+
+                        p.flow-text
+                            |Partition 
+                            b Home 
+                            |:
+                            
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkfs.ext4 /dev/sda4
+                                            span.blinking _
+
+                        p.flow-text
+                            |Puis on crée le 
+                            b swap
+                            |...
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkswap /dev/sda2
+                                            span.blinking _
+
+                        p.flow-text
+                            |...Et on l'active!
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |swapon /dev/sda2
+                                            span.blinking _
+
+                        p.flow-text
+                            |Pour finir, nous allons creer nos points de montage et y associer nos partitions:
+                            
+
+                        p.flow-text
+                            |Montez votre partition 
+                            span.indigo-text.darken-4 /dev/sda1 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mount /dev/sda1 /mnt
+                                            span.blinking _                                                
+
+                        p.flow-text
+                            |Créez les dossiers 
+                            b boot 
+                            |et 
+                            b home 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkdir /mnt/{boot,home}
+                                            span.blinking _
+
+                        p.flow-text
+                            |Créez le dossier 
+                            b efi 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt/boot
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mkdir /mnt/boot/efi
+                                            span.blinking _
+
+                        p.flow-text
+                            |Montez votre partition 
+                            span.indigo-text.darken-4 /dev/sda2 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt/boot/efi
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mount /dev/sda2 /mnt/boot/efi
+                                            span.blinking _
+
+                        p.flow-text
+                            |Montez votre partition 
+                            span.indigo-text.darken-4 /dev/sda4 
+                            |dans le repertoire 
+                            span.indigo-text.darken-4 /mnt/home
+                            |:
+
+                            div.row
+                                div.col.s12.m6
+                                    div.card-panel.black.lighten-2.grey-text.termfont
+                                        b.no-select
+                                            span.red-text root@archiso ~ 
+                                            span.white-text # 
+                                            |mount /dev/sda4 /mnt/home
+                                            span.blinking _
+
+                        p.flow-text
+                            |Nous pouvons desormais passer a l'installation de la base...
+                        //- Fin de la section dediée au formatage en mode BIOS et UEFI
+
+            p.flow-text
+                |Nous pourrions attaquer dans le gras dirrectement et reccuperer la base de notre installation mais nous allons d'abord choisir le/les mirroirs de paquets le/les plus rapide(s).
+
+            p.flow-text
+                |Sachez qu'il vous faudra un acces fonctionnel a Internet pour la suite des opérations. Si vous utilisez une connexion wifi, informez vous au prealable sur l'outil 
+                a(href='https://wiki.archlinux.org/index.php/Netctl') Netctl
+
+            p.flow-text
+                |Si vous etes derriere un proxy:
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            span.red-text root@archiso ~ 
+                            span.white-text # 
+                            |export http_proxy=http://proxy:port
+                            span.blinking _
+
+            p.flow-text
+                |Pour les mirroirs de paquets, la demarche est simplifiée et tiendra en une commande (Pour la France):                                       
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            span.red-text root@archiso ~ 
+                            span.white-text # 
+                            |reflector -c France -c "United Kingdom" -p https -a 12 --sort rate --save /etc/pacman.d/mirrorlist
+                            span.blinking _
+
+            p.flow-text
+                |Cela vous generera une 
+                b liste de mirroirs 
+                |pour la France sans que vous n'ayez besoin d'editer votre 
+                span.indigo-text.darken-4 etc/pacman.d/mirrorlist 
+                |a la main.
+
+            p.flow-text
+                |On passe à l’installation de la base. La deuxième ligne rajoute certains outils bien pratiques à avoir dès le départ. On peut ensuite s’attaquer à l’installation proprement dite.
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            span.red-text root@archiso ~ 
+                            span.white-text # 
+                            |pacstrap /mnt base base-devel pacman-contrib nano linux linux-headers linux-firmware man-db man-pages e2fsprogs sysfsutils
+                            span.blinking _
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            span.red-text root@archiso ~ 
+                            span.white-text # 
+                            |pacstrap /mnt zip unzip p7zip alsa-utils syslog-ng mtools mc dosfstools lsb-release ntfs-3g exfat-utils bash-completion
+                            span.blinking _
+
+            p.flow-text
+                b NOTE: 
+                |Les paquets 
+                b nano 
+                |et 
+                b linux 
+                |ne sont plus compris dans le meta-package 
+                b base
+                |, il convient donc de les installer a part, vous pouvez remplacer 
+                b nano 
+                |par 
+                b vi/vim/emacs 
+                |mais inutile de vous prendre pour des experts, 
+                b nano 
+                |suffit dans la majorité des cas.
+
+            p.flow-text
+                b NOTE 2: 
+                |Si vous preferez le 
+                b kernel LTS
+                |, remplacez 
+                b linux  
+                |par 
+                b linux-lts 
+                |et 
+                b linux-headers 
+                |par 
+                b linux-lts-headers
+                |.
+
+            p.flow-text
+                |Si vous êtes sur un pc portable, l’ajout de 
+                a(href='https://wiki.archlinux.org/index.php/TLP') tlp  
+                |est conseillé pour améliorer l’autonomie de votre batterie.
+
+            p.flow-text
+                |Si vous désirez rajouter le support des microcodes pour votre processeur, il vous suffira de rajouter soit le paquet 
+                b amd-ucode 
+                |(pour AMD) ou 
+                b intel-ucode 
+                |(pour Intel). Grub détectera leurs présences automatiquement.
+
+            p.flow-text
+                |Maintenant que les outils de base sont installés, il faut générer le fichier 
+                span.indigo-text.darken-4 /etc/fstab 
+                |qui liste les partitions présentes.
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            span.red-text root@archiso ~ 
+                            span.white-text # 
+                            |genfstab -U /mnt >> /mnt/etc/fstab
+                            span.blinking _
+
+            p.flow-text
+                |Nous allons installer le chargeur de démarrage, pour ce tutoriel nous utiliserons 
+                b Grub2
+                |. Vous pouvez utiliser 
+                a(href='https://wiki.archlinux.org/index.php/REFInd') rEFInd 
+                |ou autre chose si vous le souhaitez mais ce guide ne traitera que l'installation de 
+                b Grub2.
+
+            p.flow-text
+                |Pour rappel, ce guide suppose que vous installez ArchLinux en Mono-Boot, et ne prend pas en compte les autres cas de figures.
+
+            p.flow-text
+                |Pour installer 
+                b GRUB
+                |, comme precedement, a l'aide de 
+                b pacstrap
+                |:            
+            
+            //- Installation Grub BIOS
+            div.row.bElem
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            span.red-text root@archiso ~ 
+                            span.white-text # 
+                            |pacstrap /mnt grub
+                            span.blinking _
+
+            //- Installation Grub UEFI                            
+            div.row.uElem
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            span.red-text root@archiso ~ 
+                            span.white-text # 
+                            |pacstrap /mnt grub efibootmgr
+                            span.blinking _
+
+            p.flow-text
+                |On passe aux réglages de l’OS. Il faut donc 
+                b chroot 
+                |dans notre base fraichement installée. On utilise la commande suivante :
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            span.red-text root@archiso ~ 
+                            span.white-text # 
+                            |arch-chroot /mnt
+                            span.blinking _
+
+            p.flow-text
+                |Avant d’aller plus loin, voici quelques infos pratiques. Cela concerne les pays francophones comme la 
+                b Belgique
+                |, la 
+                b Suisse
+                |, le 
+                b Luxembourg 
+                |ou encore le 
+                b Canada francophone
+                |.
+                
+            p.flow-text    
+                |Nous allons par la suite créer des fichiers qui demanderont des valeurs précises. Les voici résumées ici :
+
+            table.striped
+                thead
+                    tr
+                        th Pays
+                        th Locale (LANG)
+                        th Keymap (KEYMAP)
+                tbody
+                    tr
+                        td France
+                        td fr_FR.UTF-8
+                        td fr-latin9                             
+                    tr
+                        td Belgique
+                        td fr_BE.UTF-8
+                        td be-latin1
+                    tr
+                        td Luxembourg
+                        td fr_LU.UTF-8
+                        td fr-latin9
+                    tr
+                        td Suisse
+                        td fr_CH.UTF-8
+                        td fr_CH-latin1
+                    tr
+                        td Canada
+                        td fr_CA.UTF-8
+                        td cf
+
+            p.flow-text
+                |Pour avoir le bon clavier en mode texte, créez le fichier 
+                span.indigo-text.darken-4 /etc/vconsole.conf
+                |. Il suffira de l’adapter si le besoin s’en fait sentir:
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |nano /etc/vconsole.conf
+                            span.blinking _
+
+            p.flow-text
+                |Exemple pour la France:
+
+            b.termfont
+                p KEYMAP=fr-latin9
+                p FONT=eurlatgr
+
+            p.flow-text
+                |Pour avoir la localisation française, le fichier 
+                span.indigo-text.darken-4 /etc/locale.conf 
+                |doit contenir la bonne valeur pour LANG.                                        
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |nano /etc/locale.conf
+                            span.blinking _
+
+            p.flow-text
+                |Exemple pour la France:
+
+            b.termfont
+                p LANG=fr_FR.UTF-8
+                p LC_COLLATE=C
+
+            p.flow-text
+                |Verifiez si les lignes 
+                b fr_FR.UTF-8 UTF-8 
+                |et 
+                b en_US.UTF-8 UTF-8 
+                |dans le fichier 
+                span.indigo-text.darken-4 /etc/locale.gen  
+                |n’ont pas de 
+                b # 
+                |devant elles, pour se faire:                              
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |nano /etc/locale.gen
+                            span.blinking _
+
+            p.flow-text
+                |Et modifiez le fichier en consequence. Une fois que c'est fait nous allons pouvoir generer les locales:                
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |locale-gen
+                            span.blinking _
+
+            p.flow-text
+                |Vous pouvez a present, si vous le desirez, activer le Français pour la session en cours (donc provisoirement):                
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |export LANG=fr_FR.UTF-8
+                            span.blinking _
+            
+            p.flow-text
+                |Profitons en pour ajouter le nom de la machine dans le fichier 
+                span.indigo-text.darken-4 /etc/hostname
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |nano /etc/hostname
+                            span.blinking _
+
+            p.flow-text
+                |Par exemple:
+
+            b.termfont
+                p ArchLinux
+
+            p.flow-text
+                |En Bonus ajoutons le nom "reseau" de la machine, tant qu'on y est, dans le fichier 
+                span.indigo-text.darken-4 /etc/hosts                        
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |nano /etc/hosts
+                            span.blinking _
+
+            p.flow-text
+                |Par exemple:
+
+            b.termfont
+                p 127.0.0.1 ArchLinux
+
+            p.flow-text
+                |Concernant le fuseau horraire, Une seule étape. Prenons le cas d’une installation avec le fuseau horaire de Paris. Tout dépend de votre lieu de résidence. On commence par créer un lien symbolique :    
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+                            span.blinking _
+
+            p.flow-text
+                |Synchronisez votre horlge materielle avec le fuseau horraire configuré ci-dessus:                
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |hwclock --systohc --utc
+                            span.blinking _
+
+            p.flow-text
+                |Generons l'image du kernel, si vous avez choisi 
+                b linux-lts
+                |, remplacez la ligne en consequence.
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |mkinitcpio -p linux
+                            span.blinking _
+
+            div.container
+                div.row
+                    div.col.s12.m8
+                        div.card-panel.grey.lighten-2.black-text.center-align
+                            img.materialboxed.responsive-img(src="img/mkinitcpio.png", alt="Image montrant la generation de l'image du Kernel")
+                            p Génération de l'image du Kernel
+                            
+            //-GRUB en mode BIOS
+            p.flow-text.bElem
+                | Installons maintenant 
+                b GRUB 
+                |sur notre partition 
+                span.indigo-text.darken-4 /boot 
+                |afin de pouvoir demarrer sur notre ArchLinux fraichement installée
+
+            div.row.bElem
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |grub-install --no-floppy --recheck /dev/sda
+                            span.blinking _
+
+            //-GRUB en mode UEFI
+            p.flow-text.uElem
+                |Installons maintenant 
+                b GRUB 
+                |sur notre partition 
+                span.indigo-text.darken-4 /boot/efi 
+                |afin de pouvoir demarrer sur notre ArchLinux fraichement installée
+
+            div.row.uElem
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |mount | grep efivars &> /dev/null || mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+                            span.blinking _
+
+            div.row.uElem
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=arch_grub --recheck
+                            span.blinking _
+
+            p.flow-text
+                |Après avoir généré l’image noyau et installé 
+                b GRUB
+                |, il faut passer au fichier de configuration du lanceur.
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |grub-mkconfig -o /boot/grub/grub.cfg
+                            span.blinking _                
+
+            p.flow-text
+                |Bien entendu, aucune erreur ne doit apparaître. On donne un mot de passe au compte root :
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |passwd root
+                            span.blinking _
+
+            p.flow-text
+                |Pendant que nous en sommes dans les comptes utilisateurs, créons donc notre compte:
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |useradd -m -g wheel -c 'Nom complet de l’utilisateur' -s /bin/bash nom-de-l’utilisateur
+                            span.blinking _
+
+            p.flow-text
+                |Attribuez un mot de passe a ce nouveau compte fraichement créé:                
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |passwd nom-de-l’utilisateur
+                            span.blinking _
+
+            p.flow-text
+                |Profitons enfin du fait que l'utilisateur ai été ajouté au groupe 
+                b wheel 
+                |pour activer le 
+                b sudo 
+                |pour ce groupe, ça nous sera utile par la suite.
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |nano /etc/sudoers
+                            span.blinking _
+
+            p.flow-text
+                |Il faut aller, en utilisant la flèche du bas jusqu’à la ligne:
+
+            b.termfont 
+                p # %wheel ALL=(ALL) ALL
+
+            p.flow-text
+                |Situé en dessous de la ligne:
+
+            b.termfont
+                |##Uncomment to allow members of group wheel to execute any command
+
+            p.flow-text
+                |Decommenter celle-ci en enlevant le 
+                b # 
+                |et enregistrez.
+
+            p.flow-text
+                b RAPPEL: 
+                |Sur nano, 
+                b CTRL+X 
+                |suivi de la touche 
+                b Y 
+                |(pour yes) permet d’enregistrer la modification.
+
+            div.container
+                div.row
+                    div.col.s12.m8
+                        div.card-panel.grey.lighten-2.black-text.center-align
+                            img.materialboxed.responsive-img(src="img/mkinitcpio.png", alt="Image montrant le contenu de /etc/sudoers")
+                            p Edition du fichier /etc/sudoers
+
+            p.flow-text
+                |Afin d'eviter tous problemes futurs nous allons installer notre gestionnaire de connexion réseau des maintenant. Pour l'exemple ca sera 
+                a(href='https://wiki.archlinux.org/index.php/NetworkManager') NetworkManager 
+                |mais vous pouvez tout aussi bien utiliser 
+                a(href='https://wiki.archlinux.org/index.php/Wicd') Wicd                                                
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |pacman -Syy networkmanager
+                            span.blinking _
+
+            p.flow-text
+                |Maintenant que 
+                b NetworkManager 
+                |est installé, activons le:
+
+            div.row
+                div.col.s12.m6
+                    div.card-panel.black.lighten-2.grey-text.termfont
+                        b.no-select
+                            |[root@archiso /] # 
+                            |systemctl enable NetworkManager
+                            span.blinking _
+
+            p.flow-text
+                b NOTE: 
+                |Les gestionnaires de connexion  
+                b Netctl 
+                |et 
+                b NetworkManager 
+                |entrent en conflit et ne doivent pas être utilisé en même temps. D’ailleurs, 
+                b netctl 
+                |et 
+                b wicd 
+                |entrent aussi en conflit. 
+                b.red-text Une règle simple : Un seul gestionnaire de connexion réseau à la fois !                            
 
             div#graphique.section.scrollspy      
                 h4.indigo-text.darken-4
@@ -95,3 +1123,8 @@ block body
             div#desktop.section.scrollspy      
                 h4.indigo-text.darken-4
                     |Partie 4. Installer les meubles - Installation du "Desktop Environnement".
+
+
+
+
+                    include includes/scripts.pug                    
